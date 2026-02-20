@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import TrendingCarousel from './components/TrendingCarousel';
 import TrailerCard from './components/TrailerCard';
 
 const featuredShow = {
@@ -8,15 +9,6 @@ const featuredShow = {
     'A crew of curious AIs explores distant galaxies, solving cosmic mysteries with humor, heart, and superior processing power.',
   cta: 'Watch Now'
 };
-
-const trendingNow = [
-  'Nebula Nights',
-  'Code & Cosmos',
-  'Orbit Ops',
-  'Starlight Soundtrack',
-  'Quantum Cafe',
-  'Gravity Games'
-];
 
 const trailerLineup = [
   {
@@ -64,6 +56,27 @@ const trailerLineup = [
   thumbnail: `https://img.youtube.com/vi/${trailer.youtubeId}/hqdefault.jpg`
 }));
 
+const trendingGradients = [
+  'linear-gradient(135deg, rgba(196, 181, 253, 0.85) 0%, rgba(249, 168, 212, 0.85) 100%)',
+  'linear-gradient(135deg, rgba(129, 140, 248, 0.85) 0%, rgba(248, 113, 113, 0.85) 100%)',
+  'linear-gradient(135deg, rgba(165, 180, 252, 0.85) 0%, rgba(251, 191, 36, 0.85) 100%)',
+  'linear-gradient(135deg, rgba(99, 102, 241, 0.85) 0%, rgba(244, 114, 182, 0.85) 100%)',
+  'linear-gradient(135deg, rgba(192, 132, 252, 0.85) 0%, rgba(251, 113, 133, 0.85) 100%)'
+];
+
+const trendingArtwork =
+  'https://images.unsplash.com/photo-1518281361980-b26bfd556770?auto=format&fit=crop&w=800&q=80';
+
+const trendingSpotlights = trailerLineup.map((trailer, index) => ({
+  id: trailer.youtubeId,
+  title: trailer.title,
+  youtubeUrl: `https://www.youtube.com/watch?v=${trailer.youtubeId}`,
+  meta: trailer.genre,
+  duration: trailer.duration,
+  gradient: trendingGradients[index % trendingGradients.length],
+  artwork: trendingArtwork
+}));
+
 const App = () => {
   const [activeTrailerId, setActiveTrailerId] = useState(null);
 
@@ -86,17 +99,7 @@ const App = () => {
       </header>
 
       <main className="content">
-        <section className="row">
-          <h2 className="row__title">Trending Now</h2>
-          <div className="row__items">
-            {trendingNow.map((title) => (
-              <article key={title} className="card">
-                <div className="card__poster" aria-hidden="true" />
-                <h3 className="card__title">{title}</h3>
-              </article>
-            ))}
-          </div>
-        </section>
+        <TrendingCarousel items={trendingSpotlights} />
 
         <section className="trailers">
           <div className="trailers__header">
